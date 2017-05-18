@@ -8,7 +8,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="GERENTE")
 @DiscriminatorValue("GERENTE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Gerente extends Funcionario {

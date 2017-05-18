@@ -11,7 +11,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="FUNCIONARIO")
 public abstract class Funcionario extends Pessoa {
 	
 	@ManyToOne
