@@ -5,19 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-
 </head>
 <body>
-	<h1>Cadastro</h1>
-
 	<form action="Controller" method="POST">
-
-		<label for="nome">Nome</label><br/>
-		<input type="text" name="nome" id="nome" /><br/>
-		<label for="email">Email</label><br/>
-		<input type="text" name="email" id="email" /><br/>
-		<input type="hidden" name="command" value="CadastrarController">
-		<input type="submit" value="Cadastrar">
+		<input type="hidden" name="command" value="LogarController">
+		<label for="email">Email</label><br /> 
+		<input type="text" name="email" id="email" /><br />
+		
+		<label for="senha">Senha</label><br /> 
+		<input type="password" name="senha" id="senha" /><br />
+		<input type="submit" value="Logar">
 	</form>
+	${mensagem}
 </body>
 </html>

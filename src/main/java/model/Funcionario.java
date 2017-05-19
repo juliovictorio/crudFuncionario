@@ -17,7 +17,7 @@ public abstract class Funcionario extends Pessoa {
     @JoinColumn(name="ID_DEPARTAMENTO")
 	private Departamento departamento;
 	
-	@Column(name="DATA")
+	@Column(name="DATA_ADMISSAO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataAdmissao;
 	

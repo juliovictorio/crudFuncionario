@@ -17,13 +17,20 @@
 	<persistence-unit name="apiPU" transaction-type="JTA">
 			
 		<jta-data-source>java:/jboss/datasource/estacio-api-ds</jta-data-source>
+		
+		<!-- models -->
 		<class>model.Pessoa</class>
+		<class>model.Departamento</class>
+		<class>model.Funcionario</class>
+		<class>model.Gerente</class>
+		<class>model.Secretaria</class>
+		
 		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
 		<validation-mode>NONE</validation-mode>
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop"/> -->
 		</properties>
 	</persistence-unit>
 </persistence>

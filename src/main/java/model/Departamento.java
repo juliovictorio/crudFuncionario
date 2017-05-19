@@ -30,6 +30,13 @@ public class Departamento implements Serializable{
 	@Column(name="NOME_DEPARTAMENTO")
 	private String nomeDepartamento;
 
+	public Departamento() {
+	}
+	
+	public Departamento(long id) {
+		this.id = id;
+	}
+
 	public long getId() {
 		return id;
 	}

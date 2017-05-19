@@ -1,0 +1,16 @@
+* O sistema está configurado para executar com o servidor WildFly.
+* O sistema está fazendo uso de um data source configurado no próprio servidor conforme configurações listadas abaixo:
+				<datasource jndi-name="java:/jboss/datasource/estacio-api-ds" pool-name="OracleEstacioDS" enabled="true">
+                    <connection-url>jdbc:oracle:thin:@localhost:1521:xe</connection-url>
+                    <driver>oracle</driver>
+                    <pool>
+                        <min-pool-size>1</min-pool-size>
+                        <max-pool-size>10</max-pool-size>
+                        <prefill>true</prefill>
+                    </pool>
+                    <security>
+                        <user-name>ESTACIOCRUD</user-name>
+                        <password>senha</password>
+                    </security>
+                </datasource>
+* Há ainda a necessidade de executar o script localizado em resources/sql/scripts.sql

@@ -4,14 +4,19 @@ import java.io.IOException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+
+import model.Pessoa;
 
 @WebServlet(value="/Controller")
+@Transactional
 public class Controller extends HttpServlet {
     
 	private static final long serialVersionUID = 7616184007340949927L;
@@ -20,12 +25,19 @@ public class Controller extends HttpServlet {
 	protected EntityManager entityManager;
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //VERIFICA SE O USUARIO ESTÁ LOGADO
-
         Command comando;
+        Pessoa usuarioLogado;
+        String page = null;
 		try {
-			comando = (Command) Class.forName("view."+request.getParameter("command")).newInstance();
-			comando.execute(request, response, entityManager);        
+			Object usuario = request.getSession().getAttribute("usuarioLogado");
+			String command = request.getParameter("command");
+			if (usuario == null && !("LogarController".equals(command))) {
+				page = "/login.jsp";
+			}else{
+				comando = (Command) Class.forName("view."+command).newInstance();
+				page = comando.execute(request, response, entityManager);
+			}
+			getServletContext().getRequestDispatcher(page).forward(request, response);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
