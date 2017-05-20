@@ -21,39 +21,53 @@ import model.Secretaria;
 @Stateless
 public class CadastrarController implements Command {
 
-	private PessoaDAO secretariaDAO;
-	
+	private PessoaDAO pessoaDAO;
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response, EntityManager entityManager) {
 		Funcionario funcionario = null;
-		String tipoFuncionario = request.getParameter("tipoFuncionario");
-		if ("GERENTE".equals(tipoFuncionario)) {
-			funcionario = new Gerente();
-			((Gerente)funcionario).setBonificacao(Double.valueOf(request.getParameter("bonificacao")));;
-		}else{
-			 funcionario = new Secretaria();
-			 ((Secretaria)funcionario).setFalaIngles(Boolean.valueOf(request.getParameter("falaIngles")));
-			 ((Secretaria)funcionario).setPeridoTrabalho(PeriodoTrabalho.valueOf(request.getParameter("periodoTrabalho")));
-		}
-		secretariaDAO = new PessoaDAOImpl(entityManager);
-		
-		funcionario.setNome(request.getParameter("nome"));
-		funcionario.setEmail(request.getParameter("email"));
-		funcionario.setSenha(request.getParameter("senha"));
-		funcionario.setSalario(Double.valueOf(request.getParameter("salario")));
-		funcionario.setDepartamento(new Departamento(Long.valueOf(request.getParameter("departamento"))));
-		funcionario.setDataAdmissao(new Date());
-		funcionario.setMatricula(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)+System.currentTimeMillis()));
-		
 		String mensagem = "Cadastro efetuado com sucesso!";
-		
+		boolean edicao = false;
+
 		try {
-			secretariaDAO.insere(funcionario);
+			String tipoFuncionario = request.getParameter("tipoFuncionario");
+			pessoaDAO = new PessoaDAOImpl(entityManager);
+			String idFuncionario = request.getParameter("idFuncionario");
+			if (idFuncionario != null && !idFuncionario.equals("")) {
+				funcionario = (Funcionario) pessoaDAO.recupera(Long.valueOf(idFuncionario));
+				edicao = true;
+			}else{
+				if ("GERENTE".equals(tipoFuncionario)) {
+					funcionario = new Gerente();
+					((Gerente) funcionario).setBonificacao(Double.valueOf(request.getParameter("bonificacao")));
+				} else {
+					funcionario = new Secretaria();
+					((Secretaria) funcionario).setFalaIngles(Boolean.valueOf(request.getParameter("falaIngles")));
+					((Secretaria) funcionario)
+					.setPeridoTrabalho(PeriodoTrabalho.valueOf(request.getParameter("periodoTrabalho")));
+				}
+			}
+			
+
+			funcionario.setNome(request.getParameter("nome"));
+			funcionario.setEmail(request.getParameter("email"));
+			funcionario.setSalario(Double.valueOf(request.getParameter("salario")));
+			funcionario.setDepartamento(new Departamento(Long.valueOf(request.getParameter("departamento"))));
+			funcionario.setDataAdmissao(new Date());
+			funcionario.setMatricula(
+					String.valueOf(Calendar.getInstance().get(Calendar.YEAR) + System.currentTimeMillis()));
+
+			if (edicao) {
+				pessoaDAO.atualiza(funcionario);
+			}else{
+				funcionario.setSenha(request.getParameter("senha"));
+				pessoaDAO.insere(funcionario);
+			}
 		} catch (DAOException e) {
 			e.printStackTrace();
-			mensagem = "Ocorreu um erro ao efetuar o cadastro: " +e.getMessage();
+			mensagem = "Ocorreu um erro ao efetuar o cadastro: " + e.getMessage();
 		}
-		
+
 		request.setAttribute("mensagem", mensagem);
 		return "/cadastro.jsp";
 	}

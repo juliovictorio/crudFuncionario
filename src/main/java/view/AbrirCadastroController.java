@@ -20,8 +20,7 @@ public class AbrirCadastroController implements Command {
 		departamentoDAO = new DepartamentoDAOImpl(entityManager);
 
 		try {
-			Collection<Departamento> departamentos = departamentoDAO.listar();
-			request.setAttribute("departamentos",departamentos);
+			request.setAttribute("departamentos",departamentoDAO.listar());
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}

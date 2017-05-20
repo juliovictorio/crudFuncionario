@@ -6,28 +6,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Lista de funcionarios</title>
-<style type="text/css" src="css/estilo.css" ></style>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	<h1>Lista de funcionários</h1>
-	<table>
-		<tr>
-			<th>Nome</th>
-			<th>Email</th>
-			<th>Salario</th>
-		</tr>
-		<c:forEach var="funcionario" items="${funcionarios}">
-			<tr>
-				<td>${funcionario.nome}</td>
-				<td>${funcionario.email}</td>
-				<td>${funcionario.salario}</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<p>
-		<a href="Controller?command=AbrirCadastroController">
-			Cadastro de funcionários
-		</a>
-	</p>
+	<div class="container">
+		<jsp:include page="cabecalho.jsp" />
+		<div class="jumbotron">
+			<h1>Lista de funcionários</h1>
+			<table class="table-striped table-bordered">
+				<tr>
+					<th>Nome</th>
+					<th>Email</th>
+					<th>Salario</th>
+					<th colspan="2">Ações</th>
+				</tr>
+				<c:forEach var="funcionario" items="${funcionarios}">
+					<tr>
+						<td>${funcionario.nome}</td>
+						<td>${funcionario.email}</td>
+						<td>${funcionario.salario}</td>
+						<td><a
+							href="Controller?command=EditarController&idFuncionario=${funcionario.id}">Editar</a>
+						</td>
+						<td><a
+							href="Controller?command=ExcluirController&idFuncionario=${funcionario.id}">Excluir</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+
+	</div>
 </body>
 </html>

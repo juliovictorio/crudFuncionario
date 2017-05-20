@@ -33,6 +33,9 @@ public class Controller extends HttpServlet {
 			String command = request.getParameter("command");
 			if (usuario == null && !("LogarController".equals(command))) {
 				page = "/login.jsp";
+			}else if("DeslogarController".equals(command)){
+				page = "/login.jsp";
+				request.getSession().removeAttribute("usuarioLogado");
 			}else{
 				comando = (Command) Class.forName("view."+command).newInstance();
 				page = comando.execute(request, response, entityManager);

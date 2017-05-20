@@ -4,18 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Login do sistema</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	<form action="Controller" method="POST">
-		<input type="hidden" name="command" value="LogarController">
-		<label for="email">Email</label><br /> 
-		<input type="text" name="email" id="email" /><br />
-		
-		<label for="senha">Senha</label><br /> 
-		<input type="password" name="senha" id="senha" /><br />
-		<input type="submit" value="Logar">
-	</form>
-	${mensagem}
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Login do sistema</h1>
+			<form action="Controller" method="POST">
+				<input type="hidden" name="command" value="LogarController">
+				<label for="email">Email</label><br /> <input type="text"
+					name="email" id="email" /><br /> <label for="senha">Senha</label><br />
+				<input type="password" name="senha" id="senha"/>
+				<br />
+				<br /> 
+				<input type="submit" value="Logar" class="btn btn-lg btn-primary">
+			</form>
+			${mensagem}
+		</div>
+	</div>
 </body>
 </html>
